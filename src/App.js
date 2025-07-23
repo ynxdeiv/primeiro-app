@@ -1,65 +1,72 @@
+import { useState } from "react";
 
-import { useState } from 'react';
-function App(){
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [idade, setIdade] = useState(0);
 
-  const [user, setUser] = useState({});
-  const [cont, setCount]= useState(0);
+export default function Home (){
+  const[email, setEmail]=useState('')
+  const[nome, setNome]=useState('')
+  const[idade,setIdade] = useState(0)
+  const[user,setUser]= useState({})
 
-  function handleRegister(e){
+  function handleSubmit(e){
     e.preventDefault()
     setUser({
-      nome: nome,
       email:email,
-      idade: idade
+      nome:nome,
+      idade:idade,
     })
-    setCount(cont+1)
   }
   return(
-
   <>
-  <div>
-    <form onSubmit={handleRegister}>
-      <h1>Cadastrando usuario</h1>
-
-      <label>Nome: </label>
-      <input 
-      placeholder='digite seu nome'
-      value={nome}
-      onChange = {(e)=> setNome(e.target.value)}
-
-      
+  <h1>Cadastro de Usuário</h1>
+  <form onSubmit={handleSubmit}>
+    <div>
+      <label htmlFor="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Digite seu email"
+        required
       />
-      <br/>
-            <label>Email: </label>
-      <input placeholder='ddigite seu email'
-      value={email}
-      onChange = {(e)=> setEmail(e.target.value)}
-
+    </div>
+    
+    <div>
+      <label htmlFor="nome">Nome:</label>
+      <input
+        type="text"
+        id="nome"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+        placeholder="Digite seu nome"
+        required
       />
-      <br/>
-            <label>Idade: </label>
-      <input placeholder='Digite sua idade'
-            value={idade}
-      onChange = {(e)=> setIdade(e.target.value)}/>
-      <br/>
-      <button type='submit'>registrar</button>
-    </form>
-
-    <br/>
-        <br/>
-        <span>Bem vindo: {user.nome} </span>        <br/>
-        <span>Idade: </span>  {user.idade}      <br/>
-
-        <span>Email: </span>   {user.email}     <br/>
-                <span>Contador </span>   {cont}     <br/>
-
-  </div>
-  </>    
-  );
+    </div>
+    
+    <div>
+      <label htmlFor="idade">Idade:</label>
+      <input
+        type="number"
+        id="idade"
+        value={idade}
+        onChange={(e) => setIdade(parseInt(e.target.value) || 0)}
+        placeholder="Digite sua idade"
+        min="18"
+        required
+      />
+    </div>
+    
+    <button type="submit">Cadastrar</button>
+  </form>
+  
+  {user.nome && (
+    <div style={{marginTop: '20px', padding: '10px', border: '1px solid #ccc'}}>
+      <h3>Usuário Cadastrado:</h3>
+      <p><strong>Nome:</strong> {user.nome}</p>
+      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Idade:</strong> {user.idade} anos</p>
+    </div>
+  )}
+  </>)
 
 }
-
-export default App;
