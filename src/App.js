@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 export default function Home (){
   const[input, setInput] = useState("")
   const[tarefas, setTarefas]=useState([
-    "Pagar a conta de Luz",
-    "Estudar Javascript"
   ])
 
 
+  useEffect(()=>{
+    const tarefaStorage = localStorage.getItem('@tarefa')
+
+    if(tarefaStorage){
+      setTarefas(JSON.parse(tarefaStorage))
+    }
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('@tarefa', JSON.stringify(tarefas))
+
+  }, 
+  [tarefas])
+
   function handleSubmit(e){
     e.preventDefault()
-    setTarefas([...tarefas, input])
+    setTarefas([...tarefas, input]);
+    setInput("");
     
 
   }
