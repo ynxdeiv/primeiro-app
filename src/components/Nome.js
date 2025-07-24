@@ -1,7 +1,7 @@
-function Nome({aluno}){
+function Nome({aluno,anos}){
 
   return(
-    <span>Bem vindo {aluno}</span>
+    <span>Bem vindo {aluno} você tem {anos}</span>
 
   );
 }
