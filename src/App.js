@@ -2,61 +2,45 @@ import { useState, useEffect } from "react";
 
 
 export default function Home (){
-  const[input, setInput] = useState("")
-  const[tarefas, setTarefas]=useState([
-  ])
 
-
+  const[mapear, setMapear]= useState([])
+  const[input, setInput]= useState("")
   useEffect(()=>{
-    const tarefaStorage = localStorage.getItem('@tarefa')
 
-    if(tarefaStorage){
-      setTarefas(JSON.parse(tarefaStorage))
-    }
-  },[])
+    localStorage.setItem("@tarefas", JSON.stringify(mapear))
+  },[mapear])
 
-  useEffect(()=>{
-    localStorage.setItem('@tarefa', JSON.stringify(tarefas))
-
-  }, 
-  [tarefas])
-
-  function handleSubmit(e){
+  function enviar(e){
     e.preventDefault()
-    setTarefas([...tarefas, input]);
-    setInput("");
-    
+    setMapear([...mapear, input])
 
   }
-  return(
+
+return(
   <>
-  <h1>Cadastro de Usuário</h1>
-  <form onSubmit={handleSubmit}>
-    
-    <div>
-      <label>Nome da tarefa:</label><br/>
-      <input
-        type="text"
-    
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Digite uma tarefa"
-        required
-      />
-    </div>
-    <ul>
-
-        {tarefas.map(tarefa =>(
-        <li key={tarefa}>{tarefa}</li>
-
-        ))}
-
-    </ul>
-    
-    <button type="submit">Registrar tarefa</button>
+  <form onSubmit={enviar}>
+  <label>nome</label>
+  <input
+  value={input}
+  placeholder="DIGITE ALGO"
+  type="text"
+  onChange={(e)=>setInput(e.target.value)}
+  >
+  </input>
+  <button type="submit">
+    enviar
+  </button>
   </form>
-  
+    <div>
+      {mapear.map(tarefa=>(
+        <ul>
+          <li key={tarefa}> {tarefa}</li>
+        </ul>
+      ))}
+    </div>
 
   </>)
+
+    
 
 }
